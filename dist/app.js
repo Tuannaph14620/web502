@@ -14,4 +14,8 @@ function sum(numA, numB) {
     return numA + numB;
 }
 sum(a, b);
+const getProduct = (product) => {
+    const result = product.map((item) => `<div> ${item.name} </div>`);
+};
+getProduct([{ id: 1, name: "Tuan" }, { id: 2, name: "Chien" }]);
 //# sourceMappingURL=app.js.map

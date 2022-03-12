@@ -21,3 +21,13 @@ function sum(numA: number, numB: number):number{
     return numA + numB;
 }
 sum(a, b)
+
+type Product = {
+    id: number,
+    name: string
+}
+
+const getProduct = <T extends Product>(product: T[])=>{
+    const result = product.map((item)=>`<div> ${item.name} </div>`)
+}
+getProduct([{id: 1, name:"Tuan"}, {id:2, name: "Chien"}])
