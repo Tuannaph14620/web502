@@ -6,17 +6,12 @@ import {Routes, Route, NavLink} from 'react-router-dom'
 import HomePage from './pages/homePage'
 import ProductPage from './pages/productPage'
 import AboutPage from './pages/aboutPage'
+import Header from './components/Header'
 
 function App() {
   return (
     <div>
-      <header>
-        <ul>
-          <li><NavLink to="/">Home</NavLink></li>
-          <li><NavLink to="/product">Product</NavLink></li>
-          <li><NavLink to="/about">About</NavLink></li>
-        </ul> 
-      </header>
+     <Header/>
       <main>
         <Routes>
           <Route path='/' element={ <HomePage/>}/>
@@ -30,6 +25,11 @@ function App() {
 
 export default App
 
+
+// const removeItem = (id: number) => {
+//   const newsProduct = products.filter(item => item.id !== id);
+//   setProducts(newsProduct)
+// }
 // const [count, setCount] = useState(2)
   // const [myName, setMyName] = useState("Tuan")
   // const [info, setInfo] = useState({ name: "Dat", age: 20});
@@ -40,13 +40,13 @@ export default App
   // ])
   // <div className="App">
        
-    // Count: {count}
+    // Count: {count}<button onClick={() => setCount(count + 1)}>Click</button>
     // <hr />
-    // My Name : {myName}
+    // My Name : {myName}<button onClick={() => setMyName("Le Tung Lam")}>Change Name</button>
     // <hr />
     // Info: {info.name} - {info.age}
     //   <hr />
-    //   Products: { products.map(item => <div>{item.name}</div>)}
+    //   Products: { products.map(item => <div>{item.name}<button onClick={() => removeItem(item.id)}>Remove</button> </div>)}  
     //   <hr />
     //   <ShowInfo name="Dat" age={20}/>
     // </div>
