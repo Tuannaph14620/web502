@@ -2,21 +2,27 @@ import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import ShowInfo from './components/ShowInfo'
-import {Routes, Route, NavLink} from 'react-router-dom'
+import {Routes, Route, NavLink, Navigate} from 'react-router-dom'
 import HomePage from './pages/homePage'
 import ProductPage from './pages/productPage'
 import AboutPage from './pages/aboutPage'
 import Header from './components/Header'
+import WebsiteLayout from './pages/layouts/WebsiteLayout'
+import AdminLayout from './pages/layouts/AdminLayout'
 
 function App() {
   return (
     <div>
-     <Header/>
       <main>
         <Routes>
-          <Route path='/' element={ <HomePage/>}/>
-          <Route path='product' element={ <ProductPage/> }/>
-          <Route path='about' element={ <AboutPage/> }/>
+          <Route path='/' element={ <WebsiteLayout/>}>
+            <Route index element= {<HomePage/>}/>
+            <Route path='product' element={ <ProductPage/> } />
+          </Route>
+          <Route path='admin' element={ <AdminLayout/>}>
+            <Route index element= {<Navigate to="dashboard"/>}/>
+            <Route path='dashboard' element={ <h1>DashBoard</h1> } />
+          </Route>
         </Routes>
       </main>
     </div>
