@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import ShowInfo from './components/ShowInfo'
@@ -9,19 +9,39 @@ import AboutPage from './pages/aboutPage'
 import Header from './components/Header'
 import WebsiteLayout from './pages/layouts/WebsiteLayout'
 import AdminLayout from './pages/layouts/AdminLayout'
+import { ProductType } from './types/product'
+import ProductDetail from './pages/ProductDetail'
+import ProductManager from './pages/ProductManager'
+import { list } from './api/products'
 
 function App() {
+  const [products, setProducts] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+      const getProducts = async () => {
+            const { data } = await list();
+            setProducts(data);
+      }
+      getProducts();
+  }, [])
   return (
     <div>
+      <div>
+        {products.map(item => item.name)}
+      </div>
       <main>
         <Routes>
           <Route path='/' element={ <WebsiteLayout/>}>
             <Route index element= {<HomePage/>}/>
-            <Route path='product' element={ <ProductPage/> } />
+            <Route path="product">
+                <Route index element={<ProductPage/>} />
+                <Route path=":id" element={<ProductDetail />} />
+              </Route>
           </Route>
           <Route path='admin' element={ <AdminLayout/>}>
             <Route index element= {<Navigate to="dashboard"/>}/>
             <Route path='dashboard' element={ <h1>DashBoard</h1> } />
+            <Route path="products" element={<ProductManager product={products}/>} />
           </Route>
         </Routes>
       </main>
