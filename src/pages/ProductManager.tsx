@@ -3,17 +3,20 @@ import { ProductType } from '../types/product'
 
 type ProductTypeProps = {
     product: ProductType[]
+    onRemote: (id:number) => void
 }
 
-const ProductManager = ({product}: ProductTypeProps ) => {
+const ProductManager = ({product, onRemote}: ProductTypeProps ) => {
   return (
     <div>
       <table>
         <thead>
-          <th>#</th>
-          <th>name</th>
-          <th>Price</th>
-          <th></th>
+            <tr>
+                <th>#</th>
+                <th>name</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
         {product?.map((item, index) => {
@@ -22,7 +25,7 @@ const ProductManager = ({product}: ProductTypeProps ) => {
             <td>{item.name}</td>
             <td>{item.price}</td>
             <td>
-              <button>Remove</button>
+              <button onClick={()=> onRemote(item.id)}> Remove</button>
             </td>
           </tr>
         })}

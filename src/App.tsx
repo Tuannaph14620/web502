@@ -12,7 +12,8 @@ import AdminLayout from './pages/layouts/AdminLayout'
 import { ProductType } from './types/product'
 import ProductDetail from './pages/ProductDetail'
 import ProductManager from './pages/ProductManager'
-import { list } from './api/products'
+import { add, list, remove } from './api/products'
+import ProductAdd from './pages/ProductAdd'
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -24,24 +25,33 @@ function App() {
       }
       getProducts();
   }, [])
+
+  const removeItem = (id: number) =>{
+    remove(id)
+    setProducts(products.filter(item => item.id !== id))
+  }
+
+  
+  const onHandlerAdd = (data: ProductType)=>{
+    add(data)
+    setProducts([...products, data])
+  }
   return (
     <div>
-      <div>
-        {products.map(item => item.name)}
-      </div>
       <main>
         <Routes>
           <Route path='/' element={ <WebsiteLayout/>}>
             <Route index element= {<HomePage/>}/>
             <Route path="product">
-                <Route index element={<ProductPage/>} />
+                <Route index element={<ProductPage product={products}/>} />
                 <Route path=":id" element={<ProductDetail />} />
               </Route>
           </Route>
           <Route path='admin' element={ <AdminLayout/>}>
             <Route index element= {<Navigate to="dashboard"/>}/>
             <Route path='dashboard' element={ <h1>DashBoard</h1> } />
-            <Route path="products" element={<ProductManager product={products}/>} />
+            <Route path="products" element={<ProductManager product={products} onRemote={removeItem}  />} />
+            <Route path='/admin/products/add' element={<ProductAdd onAdd={onHandlerAdd}/>}/>
           </Route>
         </Routes>
       </main>
