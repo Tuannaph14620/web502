@@ -12,8 +12,9 @@ import AdminLayout from './pages/layouts/AdminLayout'
 import { ProductType } from './types/product'
 import ProductDetail from './pages/ProductDetail'
 import ProductManager from './pages/ProductManager'
-import { add, list, remove } from './api/products'
+import { add, list, remove, updateNew } from './api/products'
 import ProductAdd from './pages/ProductAdd'
+import ProductEdit from './pages/ProductEdit'
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -36,6 +37,11 @@ function App() {
     add(data)
     setProducts([...products, data])
   }
+
+  const onHandleUpdate = async (product: ProductType)=>{
+    const {data} = await updateNew(product)
+    setProducts(products.map(item => item.id === data.id ? data : item))
+  }
   return (
     <div>
       <main>
@@ -50,8 +56,12 @@ function App() {
           <Route path='admin' element={ <AdminLayout/>}>
             <Route index element= {<Navigate to="dashboard"/>}/>
             <Route path='dashboard' element={ <h1>DashBoard</h1> } />
-            <Route path="products" element={<ProductManager product={products} onRemote={removeItem}  />} />
-            <Route path='/admin/products/add' element={<ProductAdd onAdd={onHandlerAdd}/>}/>
+            <Route path='product'>
+              <Route index element={<ProductManager product={products} onRemote={removeItem}  />} />
+              <Route path='add' element={<ProductAdd onAdd={onHandlerAdd}/>}/>
+              <Route path=':id/edit' element={<ProductEdit onUpdate={onHandleUpdate}/>}/>
+            </Route>
+            
           </Route>
         </Routes>
       </main>
