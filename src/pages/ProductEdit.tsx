@@ -20,7 +20,7 @@ const ProductEdit = (props: ProductEditProps) => {
 
     useEffect(()=>{
         const getProduct = async ()=>{
-            const {data} = await update(id)
+            const {data} = await update( Number(id))
             reset(data)
         }
         getProduct()

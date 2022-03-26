@@ -15,6 +15,7 @@ import ProductManager from './pages/ProductManager'
 import { add, list, remove, updateNew } from './api/products'
 import ProductAdd from './pages/ProductAdd'
 import ProductEdit from './pages/ProductEdit'
+import PrivateRouter from './components/PrivateRouter'
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -42,6 +43,7 @@ function App() {
     const {data} = await updateNew(product)
     setProducts(products.map(item => item.id === data.id ? data : item))
   }
+  
   return (
     <div>
       <main>
@@ -53,7 +55,7 @@ function App() {
                 <Route path=":id" element={<ProductDetail />} />
               </Route>
           </Route>
-          <Route path='admin' element={ <AdminLayout/>}>
+          <Route path='admin' element= { <PrivateRouter><AdminLayout/></PrivateRouter> }>
             <Route index element= {<Navigate to="dashboard"/>}/>
             <Route path='dashboard' element={ <h1>DashBoard</h1> } />
             <Route path='product'>
@@ -63,6 +65,7 @@ function App() {
             </Route>
             
           </Route>
+          <Route path='login' element= {<h1>Login Page</h1>}/>
         </Routes>
       </main>
     </div>
