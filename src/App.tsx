@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import ShowInfo from './components/ShowInfo'
 import {Routes, Route, NavLink, Navigate} from 'react-router-dom'
 import HomePage from './pages/homePage'
 import ProductPage from './pages/productPage'
-import AboutPage from './pages/aboutPage'
-import Header from './components/Header'
 import WebsiteLayout from './pages/layouts/WebsiteLayout'
 import AdminLayout from './pages/layouts/AdminLayout'
 import { ProductType } from './types/product'
@@ -16,6 +11,8 @@ import { add, list, remove, updateNew } from './api/products'
 import ProductAdd from './pages/ProductAdd'
 import ProductEdit from './pages/ProductEdit'
 import PrivateRouter from './components/PrivateRouter'
+import Register from './pages/login_regieter/Register'
+import SignIn from './pages/login_regieter/SignIn'
 
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -65,7 +62,8 @@ function App() {
             </Route>
             
           </Route>
-          <Route path='login' element= {<h1>Login Page</h1>}/>
+          <Route path='login' element= {<SignIn/>}/>
+          <Route path='register' element= {<Register/>}/>
         </Routes>
       </main>
     </div>
